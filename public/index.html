@@ -8,33 +8,52 @@
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#recommendations">Recommendations</a></li>
-                <li><a href="#database">Food Database</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+        <div class="navbar">
+            <div class="logo">
+                <a href="#">AERIS</a>
+            </div>
+            <div class="nav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#recommendations">Recommendations</a></li>
+                    <li><a href="#database">Food Database</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="menu"><i class="fa-solid fa-bars"></i></div>
+            </div>
+            <a href="#" class="highlight">Download CV</a>
+            <div class="dropdown-menu">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#recommendations">Recommendations</a></li>
+                    <li><a href="#database">Food Database</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#" class="highlight">Download CV</a></li>
+                </ul>
+            </div>
+        </div>
     </header>
 
     <main>
         <section id="home">
-            <h1>Welcome to AERIS Food Tracking</h1>
+            <h1 class="color">Welcome to AERIS Food Tracking</h1>
             <p>Track and optimize your meals on the space station with our intelligent food tracking system.</p>
         </section>
 
         <section id="recommendations">
             <h2>Food Recommendations</h2>
             <p>Get AI-driven food suggestions based on the current inventory.</p>
-            <button>Get Recommendations</button>
+            <button class="highlight">Get Recommendations</button>
         </section>
 
         <section id="database">
             <h2>Food Database</h2>
             <p>View and manage the list of available food items on the station.</p>
-            <button>View Database</button>
+            <a href="/db/view-database.html">
+                <button class="highlight">View Database</button>
+            </a>
         </section>
 
         <section id="about">

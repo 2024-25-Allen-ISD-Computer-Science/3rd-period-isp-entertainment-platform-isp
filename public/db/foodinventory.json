@@ -1,0 +1,17 @@
+[
+    {
+        "name": "Strawberries",
+        "quantity": 10,
+        "category": "Fruits"
+    },
+    {
+        "name": "Protein Bars",
+        "quantity": 25,
+        "category": "Snacks"
+    },
+    {
+        "name": "Onions",
+        "quantity": 15,
+        "category": "Vegetables"
+    }
+]

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Database</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <h1>Food Inventory</h1>
+    <div id="output"></div>
+
+    <script>
+        fetch('./foodinventory.json')
+    .then(response => {
+        console.log('Response:', response);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Fetched data:', data);
+        const outputDiv = document.getElementById('output');
+        outputDiv.innerHTML = ''; 
+
+        data.forEach(item => {
+            const itemDiv = document.createElement('div');
+            itemDiv.innerHTML = `
+                <p><strong>Name:</strong> ${item.name}</p>
+                <p><strong>Quantity:</strong> ${item.quantity}</p>
+                <p><strong>Category:</strong> ${item.category}</p>
+                <hr>
+            `;
+            outputDiv.appendChild(itemDiv);
+        });
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        const outputDiv = document.getElementById('output');
+        outputDiv.innerHTML = `<p>Error: ${error.message}</p>`;
+    });
+    </script>
+</body>
+</html>
