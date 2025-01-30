@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Recommendations</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Food Recommendations</h1>
+    <div id="output">Loading recommendations...</div>
+
+    <script>
+        async function fetchFoodInventory() {
+            try {
+                // Fetch the inventory from foodinventory.json
+                const response = await fetch('db/foodinventory.json');
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const inventory = await response.json();
+
+                console.log('Fetched inventory:', inventory); // Debugging
+
+                // Generate meal recommendations without AI
+                generateRecommendations(inventory);
+            } catch (error) {
+                document.getElementById('output').innerHTML = `<p>Error: ${error.message}</p>`;
+                console.error('Error fetching inventory:', error);
+            }
+        }
+
+        function generateRecommendations(inventory) {
+            let recommendations = [];
+
+            // Simple rule-based recommendations
+            if (inventory.some(item => item.category === "Fruits")) {
+                recommendations.push("Make a fresh fruit salad 🍓🍌🍎");
+            }
+            if (inventory.some(item => item.category === "Vegetables" && item.name.toLowerCase() === "onions")) {
+                recommendations.push("Cook a stir-fry with onions and other vegetables 🥦🥕");
+            }
+            if (inventory.some(item => item.category === "Snacks" && item.name.toLowerCase() === "protein bars")) {
+                recommendations.push("Use protein bars as a post-workout snack 💪");
+            }
+            if (inventory.some(item => item.category === "Dairy")) {
+                recommendations.push("Make a smoothie with dairy and fruits 🥛🍓");
+            }
+            if (inventory.some(item => item.category === "Grains")) {
+                recommendations.push("Prepare a healthy grain bowl 🍚🥑");
+            }
+            if (recommendations.length === 0) {
+                recommendations.push("No specific meals found. Try mixing what you have! 🍽");
+            }
+
+            // Display recommendations
+            document.getElementById('output').innerHTML = `
+                <p><strong>Suggested Meals:</strong></p>
+                <ul>${recommendations.map(rec => `<li>${rec}</li>`).join('')}</ul>
+            `;
+        }
+
+        // Load food inventory and generate recommendations on page load
+        fetchFoodInventory();
+    </script>
+</body>
+</html>
