@@ -13,14 +13,12 @@
     <script>
         async function fetchFoodInventory() {
             try {
-                // Fetch the inventory from foodinventory.json
                 const response = await fetch('db/foodinventory.json');
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const inventory = await response.json();
 
-                console.log('Fetched inventory:', inventory); // Debugging
+                console.log('Fetched inventory:', inventory); 
 
-                // Generate meal recommendations without AI
                 generateRecommendations(inventory);
             } catch (error) {
                 document.getElementById('output').innerHTML = `<p>Error: ${error.message}</p>`;
@@ -31,7 +29,6 @@
         function generateRecommendations(inventory) {
             let recommendations = [];
 
-            // Simple rule-based recommendations
             if (inventory.some(item => item.category === "Fruits")) {
                 recommendations.push("Make a fresh fruit salad 🍓🍌🍎");
             }
@@ -51,14 +48,12 @@
                 recommendations.push("No specific meals found. Try mixing what you have! 🍽");
             }
 
-            // Display recommendations
             document.getElementById('output').innerHTML = `
                 <p><strong>Suggested Meals:</strong></p>
                 <ul>${recommendations.map(rec => `<li>${rec}</li>`).join('')}</ul>
             `;
         }
 
-        // Load food inventory and generate recommendations on page load
         fetchFoodInventory();
     </script>
 </body>
