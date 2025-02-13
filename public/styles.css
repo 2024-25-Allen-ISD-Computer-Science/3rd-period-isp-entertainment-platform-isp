@@ -1,153 +1,124 @@
 * {
     font-family: 'Kanit', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
     background-color: white;
     color: #2F3659;
     text-align: center;
-}
-
-/* Nav Bar */
-
-li {
-    list-style: none;
-}
-
-a {
-    text-decoration: none;
-    color: black;
-    font-size: 1rem;
-}
-
-a:hover {
-    color: #8E6BFF;
-}
-
-header {
-    position: relative;
-    padding: 0 2rem;
+    line-height: 1.6;
 }
 
 .navbar {
-    width: 100%;
-    height: 60px;
-    max-width: 1200px;
-    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 1rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.navbar .logo a {
-    font-size: 1.5rem;
+.logo a {
+    font-size: 1.8rem;
     font-weight: bold;
+    text-decoration: none;
+    color: #2F3659;
 }
 
-.navbar .nav ul {
+.nav-links {
     display: flex;
     gap: 2rem;
-    align-items: center;
-    margin-left: auto;
-    margin-right: 0;
 }
 
-.navbar .menu {
-    color: #fff;
-    font-size: 1.5rem;
-    cursor: pointer;
+.nav-links li {
+    list-style: none;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: black;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #8E6BFF;
+}
+
+.menu-toggle {
     display: none;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
-.navbar .highlight {
-    display: block;
-    margin-left: 0;
-    margin-right: 1rem;
+.button {
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
 }
 
 .highlight {
     background-color: #8E6BFF;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border: none;
-    outline: none;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: scale 0.2s ease;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin: 0 auto;
+    color: white;
 }
 
 .highlight:hover {
     transform: scale(1.05);
-    color: white;
 }
 
 .highlight:active {
     transform: scale(0.95);
 }
 
-.dropdown-menu {
-    position: absolute;
-    top: 60px;
-    width: 250px;
-    height: 0;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
-    border-radius: 10px;
-    overflow: hidden;
-    display: none;
+section {
+    padding: 4rem 2rem;
+    max-width: 800px;
+    margin: auto;
 }
 
-.dropdown-menu li {
-    padding: 0.7rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+h1, h2 {
+    margin-bottom: 1rem;
 }
 
-.dropdown-menu .highlight {
-    width: 80%;
-    display: flex;
-    justify-content: center;
-}
-
-.dropdown-menu.open {
-    height: 325px;
-    width: 100%;
-    max-width: 100%;
-    left: 0; 
-    right: 0;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    height: 100vh;
-    background-color: transparent;
-}
-
-.color {
+.gradient-text {
     background: linear-gradient(90deg, rgba(94,104,255,1) 0%, rgba(190,129,254,1) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-
-    font-size: 72px;
+    font-size: 2.5rem;
 }
 
-hr {
-    border: none;
-    height: 4px;
-    background: linear-gradient(90deg, rgba(94,104,255,1) 0%, rgba(190,129,254,1) 100%);
-    margin: 20px 0;
-    border-radius: 2px;
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        gap: 1rem;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.9);
+        text-align: center;
+        padding: 1rem;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
 }

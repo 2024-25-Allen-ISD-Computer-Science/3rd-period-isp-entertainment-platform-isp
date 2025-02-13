@@ -32,17 +32,29 @@
             if (inventory.some(item => item.category === "Fruits")) {
                 recommendations.push("Make a fresh fruit salad 🍓🍌🍎");
             }
-            if (inventory.some(item => item.category === "Vegetables" && item.name.toLowerCase() === "onions")) {
-                recommendations.push("Cook a stir-fry with onions and other vegetables 🥦🥕");
+            if (inventory.some(item => item.category === "Vegetables")) {
+                recommendations.push("Prepare a vegetable stir-fry 🥦🥕");
             }
-            if (inventory.some(item => item.category === "Snacks" && item.name.toLowerCase() === "protein bars")) {
-                recommendations.push("Use protein bars as a post-workout snack 💪");
+            if (inventory.some(item => item.category === "Snacks")) {
+                recommendations.push("Have a snack break with some healthy options 🍫🍿");
             }
             if (inventory.some(item => item.category === "Dairy")) {
                 recommendations.push("Make a smoothie with dairy and fruits 🥛🍓");
             }
             if (inventory.some(item => item.category === "Grains")) {
                 recommendations.push("Prepare a healthy grain bowl 🍚🥑");
+            }
+            if (inventory.some(item => item.category === "Meat")) {
+                recommendations.push("Cook a protein-packed meal with meat 🍗🥩");
+            }
+            if (inventory.some(item => item.category === "Seafood")) {
+                recommendations.push("Try a seafood dish with fresh ingredients 🦐🐟");
+            }
+            if (inventory.some(item => item.category === "Beverages")) {
+                recommendations.push("Enjoy a refreshing beverage 🍵🥤");
+            }
+            if (inventory.some(item => item.category === "Sweets")) {
+                recommendations.push("Make a homemade dessert 🍪🍰");
             }
             if (recommendations.length === 0) {
                 recommendations.push("No specific meals found. Try mixing what you have! 🍽");

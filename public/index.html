@@ -5,47 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AERIS Food Tracking</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
     <header>
-        <div class="navbar">
+        <nav class="navbar">
             <div class="logo">
                 <a href="#">AERIS</a>
             </div>
-            <div class="nav">
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#recommendations">Recommendations</a></li>
-                    <li><a href="#database">Food Database</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-                <div class="menu"><i class="fa-solid fa-bars"></i></div>
-            </div>
-            <a href="#" class="highlight">Download CV</a>
-        </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#recommendations">Recommendations</a></li>
+                <li><a href="#database">Food Database</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <a href="#" class="button highlight">Download CV</a>
+        </nav>
     </header>
 
     <main>
         <section id="home">
-            <h1 class="color">Welcome to AERIS Food Tracking</h1>
+            <h1 class="gradient-text">Welcome to AERIS Food Tracking</h1>
             <p>Track and optimize your meals on the space station with our intelligent food tracking system.</p>
         </section>
 
         <section id="recommendations">
             <h2>Food Recommendations</h2>
             <p>Get AI-driven food suggestions based on the current inventory.</p>
-            <a href="food-recommendations.html">
-                <button class="highlight">Get Recommendations</button>
-            </a>
+            <a href="food-recommendations.html" class="button highlight">Get Recommendations</a>
         </section>
 
         <section id="database">
             <h2>Food Database</h2>
             <p>View and manage the list of available food items on the station.</p>
-            <a href="/db/view-database.html">
-                <button class="highlight">View Database</button>
-            </a>
+            <a href="/db/view-database.html" class="button highlight">View Database</a>
         </section>
 
         <section id="about">
@@ -62,5 +60,15 @@
     <footer>
         <p>&copy; 2025 AERIS Team. All rights reserved.</p>
     </footer>
+
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    </script>
+
 </body>
 </html>
