@@ -6,7 +6,7 @@
 }
 
 body {
-    background-color: white;
+    background-color: #F3F3F3;
     color: #2F3659;
     text-align: center;
     line-height: 1.6;
@@ -19,6 +19,11 @@ body {
     padding: 1rem 2rem;
     max-width: 1200px;
     margin: 0 auto;
+}
+
+.logo-img {
+    height: 100px; 
+    width: auto; 
 }
 
 .logo a {
