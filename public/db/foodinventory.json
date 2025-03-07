@@ -13,5 +13,80 @@
         "name": "Onions",
         "quantity": 15,
         "category": "Vegetables"
+    },
+    {
+        "name": "Apples",
+        "quantity": 12,
+        "category": "Fruits"
+    },
+    {
+        "name": "Carrots",
+        "quantity": 20,
+        "category": "Vegetables"
+    },
+    {
+        "name": "Chicken Breast",
+        "quantity": 8,
+        "category": "Meat"
+    },
+    {
+        "name": "Salmon Fillet",
+        "quantity": 5,
+        "category": "Seafood"
+    },
+    {
+        "name": "Milk",
+        "quantity": 6,
+        "category": "Dairy"
+    },
+    {
+        "name": "Eggs",
+        "quantity": 30,
+        "category": "Dairy"
+    },
+    {
+        "name": "Rice",
+        "quantity": 50,
+        "category": "Grains"
+    },
+    {
+        "name": "Bread",
+        "quantity": 10,
+        "category": "Grains"
+    },
+    {
+        "name": "Dark Chocolate",
+        "quantity": 8,
+        "category": "Sweets"
+    },
+    {
+        "name": "Coffee",
+        "quantity": 20,
+        "category": "Beverages"
+    },
+    {
+        "name": "Orange Juice",
+        "quantity": 12,
+        "category": "Beverages"
+    },
+    {
+        "name": "Cheese",
+        "quantity": 6,
+        "category": "Dairy"
+    },
+    {
+        "name": "Peanuts",
+        "quantity": 15,
+        "category": "Snacks"
+    },
+    {
+        "name": "Tofu",
+        "quantity": 10,
+        "category": "Meat"
+    },
+    {
+        "name": "Yogurt",
+        "quantity": 7,
+        "category": "Dairy"
     }
 ]

@@ -1,24 +1,46 @@
-// Fetch inventory data from foodinventory.json or localStorage
-async function fetchFoodInventory(callback) {
-    let inventory = JSON.parse(localStorage.getItem('foodInventory'));
-    if (!inventory) {
-        try {
-            const response = await fetch('db/foodinventory.json');
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            inventory = await response.json();
-            localStorage.setItem('foodInventory', JSON.stringify(inventory));
-        } catch (error) {
-            console.error('Error fetching inventory:', error);
-            document.getElementById('output').innerHTML = `<p>Error: ${error.message}</p>`;
-            return;
-        }
+// scripts.js
+
+async function fetchFoodInventory(callback, jsonPath) {
+    try {
+        const response = await fetch(jsonPath);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const inventory = await response.json();
+        localStorage.setItem('foodInventory', JSON.stringify(inventory));
+        callback(inventory);
+    } catch (error) {
+        console.error('Error fetching inventory:', error);
+        document.getElementById('output').innerHTML = `<p>Error: ${error.message}</p>`;
     }
-    callback(inventory);
 }
 
-// Generate food recommendations based on available categories
+function loadInventory(callback, jsonPath) {
+    const storedInventory = localStorage.getItem('foodInventory');
+    if (storedInventory) {
+        callback(JSON.parse(storedInventory));
+    } else {
+        fetchFoodInventory(callback, jsonPath);
+    }
+}
+
+function savePreferences(event) {
+    event.preventDefault();
+    const preferences = Array.from(document.querySelectorAll("input[name='preference']:checked"))
+                            .map(input => input.value);
+    localStorage.setItem('dietPreferences', JSON.stringify(preferences));
+    alert('Preferences saved!');
+    loadInventory(generateRecommendations, 'db/foodinventory.json');
+}
+
 function generateRecommendations(inventory) {
-    let recommendations = [];
+    if (!inventory || inventory.length === 0) {
+        document.getElementById('output').innerHTML = "<p>No food items found in inventory.</p>";
+        return;
+    }
+
+    // Retrieve saved dietary preferences
+    const savedPreferences = JSON.parse(localStorage.getItem('dietPreferences')) || [];
+
+    // Define recommendations for each category
     const categories = {
         "Fruits": "Make a fresh fruit salad 🍓🍌🍎",
         "Vegetables": "Prepare a vegetable stir-fry 🥦🥕",
@@ -31,8 +53,24 @@ function generateRecommendations(inventory) {
         "Sweets": "Make a homemade dessert 🍪🍰"
     };
 
+    // Exclude categories based on dietary preferences
+    let excludedCategories = [];
+    if (savedPreferences.includes("Vegetarian")) {
+        excludedCategories.push("Meat", "Seafood");
+    }
+    if (savedPreferences.includes("Dairy-Free")) {
+        excludedCategories.push("Dairy");
+    }
+    if (savedPreferences.includes("Low-Carb")) {
+        excludedCategories.push("Grains");
+    }
+    if (savedPreferences.includes("Gluten-Free") && !excludedCategories.includes("Grains")) {
+        excludedCategories.push("Grains");
+    }
+
+    let recommendations = [];
     for (let category in categories) {
-        if (inventory.some(item => item.category === category)) {
+        if (!excludedCategories.includes(category) && inventory.some(item => item.category === category)) {
             recommendations.push(categories[category]);
         }
     }
@@ -47,10 +85,9 @@ function generateRecommendations(inventory) {
     `;
 }
 
-// Display food inventory in view-database.html
 function displayInventory(inventory) {
     const outputDiv = document.getElementById('output');
-    outputDiv.innerHTML = ''; 
+    outputDiv.innerHTML = '';
 
     inventory.forEach((item, index) => {
         const itemDiv = document.createElement('div');
@@ -65,7 +102,6 @@ function displayInventory(inventory) {
     });
 }
 
-// Add food item to inventory
 function addFoodItem(event) {
     event.preventDefault();
     const name = document.getElementById('foodName').value;
@@ -84,7 +120,6 @@ function addFoodItem(event) {
     document.getElementById('foodForm').reset();
 }
 
-// Remove food item from inventory
 function removeFoodItem(index) {
     let inventory = JSON.parse(localStorage.getItem('foodInventory'));
     inventory.splice(index, 1);
@@ -96,9 +131,12 @@ function removeFoodItem(index) {
 document.addEventListener("DOMContentLoaded", () => {
     if (document.body.contains(document.getElementById('output'))) {
         if (window.location.pathname.includes('food-recommendations.html')) {
-            fetchFoodInventory(generateRecommendations);
+            document.getElementById('preferencesForm').addEventListener('submit', savePreferences);
+
+            loadInventory(generateRecommendations, 'db/foodinventory.json');
         } else if (window.location.pathname.includes('view-database.html')) {
-            fetchFoodInventory(displayInventory);
+
+            loadInventory(displayInventory, 'foodinventory.json');
             document.getElementById('foodForm').addEventListener('submit', addFoodItem);
         }
     }

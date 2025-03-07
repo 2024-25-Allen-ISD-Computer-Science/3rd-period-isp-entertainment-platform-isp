@@ -8,65 +8,20 @@
 </head>
 <body>
     <h1>Food Recommendations</h1>
+
+    <h2>Select Your Dietary Preferences</h2>
+    <form id="preferencesForm">
+        <label><input type="checkbox" name="preference" value="Vegetarian"> Vegetarian</label>
+        <label><input type="checkbox" name="preference" value="High-Protein"> High-Protein</label>
+        <label><input type="checkbox" name="preference" value="Low-Carb"> Low-Carb</label>
+        <label><input type="checkbox" name="preference" value="Dairy-Free"> Dairy-Free</label>
+        <label><input type="checkbox" name="preference" value="Gluten-Free"> Gluten-Free</label>
+        <br><button type="submit">Save Preferences</button>
+    </form>
+
+    <h2>Recommended Meals</h2>
     <div id="output">Loading recommendations...</div>
 
-    <script>
-        async function fetchFoodInventory() {
-            try {
-                const response = await fetch('db/foodinventory.json');
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                const inventory = await response.json();
-
-                console.log('Fetched inventory:', inventory); 
-
-                generateRecommendations(inventory);
-            } catch (error) {
-                document.getElementById('output').innerHTML = `<p>Error: ${error.message}</p>`;
-                console.error('Error fetching inventory:', error);
-            }
-        }
-
-        function generateRecommendations(inventory) {
-            let recommendations = [];
-
-            if (inventory.some(item => item.category === "Fruits")) {
-                recommendations.push("Make a fresh fruit salad 🍓🍌🍎");
-            }
-            if (inventory.some(item => item.category === "Vegetables")) {
-                recommendations.push("Prepare a vegetable stir-fry 🥦🥕");
-            }
-            if (inventory.some(item => item.category === "Snacks")) {
-                recommendations.push("Have a snack break with some healthy options 🍫🍿");
-            }
-            if (inventory.some(item => item.category === "Dairy")) {
-                recommendations.push("Make a smoothie with dairy and fruits 🥛🍓");
-            }
-            if (inventory.some(item => item.category === "Grains")) {
-                recommendations.push("Prepare a healthy grain bowl 🍚🥑");
-            }
-            if (inventory.some(item => item.category === "Meat")) {
-                recommendations.push("Cook a protein-packed meal with meat 🍗🥩");
-            }
-            if (inventory.some(item => item.category === "Seafood")) {
-                recommendations.push("Try a seafood dish with fresh ingredients 🦐🐟");
-            }
-            if (inventory.some(item => item.category === "Beverages")) {
-                recommendations.push("Enjoy a refreshing beverage 🍵🥤");
-            }
-            if (inventory.some(item => item.category === "Sweets")) {
-                recommendations.push("Make a homemade dessert 🍪🍰");
-            }
-            if (recommendations.length === 0) {
-                recommendations.push("No specific meals found. Try mixing what you have! 🍽");
-            }
-
-            document.getElementById('output').innerHTML = `
-                <p><strong>Suggested Meals:</strong></p>
-                <ul>${recommendations.map(rec => `<li>${rec}</li>`).join('')}</ul>
-            `;
-        }
-
-        fetchFoodInventory();
-    </script>
+    <script src="scripts.js"></script>
 </body>
 </html>

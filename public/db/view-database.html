@@ -7,40 +7,9 @@
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
+
     <h1>Food Inventory</h1>
-    <div id="output"></div>
-
-    <script>
-        fetch('./foodinventory.json')
-    .then(response => {
-        console.log('Response:', response);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Fetched data:', data);
-        const outputDiv = document.getElementById('output');
-        outputDiv.innerHTML = ''; 
-
-        data.forEach(item => {
-            const itemDiv = document.createElement('div');
-            itemDiv.innerHTML = `
-                <p><strong>Name:</strong> ${item.name}</p>
-                <p><strong>Quantity:</strong> ${item.quantity}</p>
-                <p><strong>Category:</strong> ${item.category}</p>
-                <hr>
-            `;
-            outputDiv.appendChild(itemDiv);
-        });
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        const outputDiv = document.getElementById('output');
-        outputDiv.innerHTML = `<p>Error: ${error.message}</p>`;
-    });
-    </script>
+    
     <h2>Manage Food Inventory</h2>
     <form id="foodForm">
         <input type="text" id="foodName" placeholder="Food Name" required>
@@ -59,9 +28,11 @@
         </select>
         <button type="submit">Add Food</button>
     </form>
-    
+
     <h2>Food Inventory</h2>
     <div id="output"></div>
-    
+
+    <script src="../scripts.js"></script>
+
 </body>
 </html>
