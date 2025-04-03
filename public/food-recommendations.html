@@ -8,17 +8,96 @@
 </head>
 <body>
     <h1>Food Recommendations</h1>
+    <h2>Select or Create a Profile</h2>
+    <form id="profileForm">
+        <input type="text" id="profileName" placeholder="Enter your name" required>
+        <button type="submit">Switch Profile</button>
+    </form>
+    <p id="activeProfileDisplay"></p>
 
     <h2>Select Your Dietary Preferences</h2>
     <form id="preferencesForm">
-        <label><input type="checkbox" name="preference" value="Vegetarian"> Vegetarian</label>
-        <label><input type="checkbox" name="preference" value="High-Protein"> High-Protein</label>
-        <label><input type="checkbox" name="preference" value="Low-Carb"> Low-Carb</label>
-        <label><input type="checkbox" name="preference" value="Dairy-Free"> Dairy-Free</label>
-        <label><input type="checkbox" name="preference" value="Gluten-Free"> Gluten-Free</label>
-        <br><button type="submit">Save Preferences</button>
+        <div class="checkbox-container">
+            <div class="checkbox-wrapper">
+                <input class="checkbox" id="vegetarian" type="checkbox" name="preference" value="Vegetarian">
+                <label class="checkbox-label" for="vegetarian">
+                    <div class="checkbox-flip">
+                        <div class="checkbox-front">
+                            <svg fill="white" height="32" width="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 13H12V19H11V13H5V12H11V6H12V12H19V13Z" class="icon-path"></path>
+                            </svg>
+                        </div>
+                        <div class="checkbox-back">
+                            <svg fill="white" height="32" width="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 19l-7-7 1.41-1.41L9 16.17l11.29-11.3L22 6l-13 13z" class="icon-path"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </label>
+                <label for="vegetarian">Vegetarian</label>
+            </div>
+        
+            <div class="checkbox-wrapper">
+                <input class="checkbox" id="high-protein" type="checkbox" name="preference" value="High-Protein">
+                <label class="checkbox-label" for="high-protein">
+                    <div class="checkbox-flip">
+                        <div class="checkbox-front">
+                            <svg fill="white" height="32" width="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 13H12V19H11V13H5V12H11V6H12V12H19V13Z" class="icon-path"></path>
+                            </svg>
+                        </div>
+                        <div class="checkbox-back">
+                            <svg fill="white" height="32" width="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 19l-7-7 1.41-1.41L9 16.17l11.29-11.3L22 6l-13 13z" class="icon-path"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </label>
+                <label for="high-protein">High-Protein</label>
+            </div>
+        
+            <div class="checkbox-wrapper">
+                <input class="checkbox" id="low-carb" type="checkbox" name="preference" value="Low-Carb">
+                <label class="checkbox-label" for="low-carb">
+                    <div class="checkbox-flip">
+                        <div class="checkbox-front">
+                            <svg fill="white" height="32" width="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 13H12V19H11V13H5V12H11V6H12V12H19V13Z" class="icon-path"></path>
+                            </svg>
+                        </div>
+                        <div class="checkbox-back">
+                            <svg fill="white" height="32" width="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 19l-7-7 1.41-1.41L9 16.17l11.29-11.3L22 6l-13 13z" class="icon-path"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </label>
+                <label for="low-carb">Low-Carb</label>
+            </div>
+        
+            <div class="checkbox-wrapper">
+                <input class="checkbox" id="dairy-free" type="checkbox" name="preference" value="Dairy-Free">
+                <label class="checkbox-label" for="dairy-free">
+                    <div class="checkbox-flip">
+                        <div class="checkbox-front">
+                            <svg fill="white" height="32" width="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 13H12V19H11V13H5V12H11V6H12V12H19V13Z" class="icon-path"></path>
+                            </svg>
+                        </div>
+                        <div class="checkbox-back">
+                            <svg fill="white" height="32" width="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 19l-7-7 1.41-1.41L9 16.17l11.29-11.3L22 6l-13 13z" class="icon-path"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </label>
+                <label for="dairy-free">Dairy-Free</label>
+            </div>
+        </div>
+        <br><button type="submit" class="button highlight">Save Preferences</button>
     </form>
-
+    <br>
+    <hr>
     <h2>Recommended Meals</h2>
     <div id="output">Loading recommendations...</div>
 

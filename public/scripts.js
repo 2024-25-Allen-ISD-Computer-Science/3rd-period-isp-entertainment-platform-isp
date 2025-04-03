@@ -28,6 +28,7 @@ function savePreferences(event) {
                             .map(input => input.value);
     localStorage.setItem('dietPreferences', JSON.stringify(preferences));
     alert('Preferences saved!');
+    // For food-recommendations.html (in public folder), JSON is in the db folder.
     loadInventory(generateRecommendations, 'db/foodinventory.json');
 }
 
@@ -40,17 +41,17 @@ function generateRecommendations(inventory) {
     // Retrieve saved dietary preferences
     const savedPreferences = JSON.parse(localStorage.getItem('dietPreferences')) || [];
 
-    // Define recommendations for each category
-    const categories = {
-        "Fruits": "Make a fresh fruit salad 🍓🍌🍎",
-        "Vegetables": "Prepare a vegetable stir-fry 🥦🥕",
-        "Snacks": "Have a snack break with some healthy options 🍫🍿",
-        "Dairy": "Make a smoothie with dairy and fruits 🥛🍓",
-        "Grains": "Prepare a healthy grain bowl 🍚🥑",
-        "Meat": "Cook a protein-packed meal with meat 🍗🥩",
-        "Seafood": "Try a seafood dish with fresh ingredients 🦐🐟",
-        "Beverages": "Enjoy a refreshing beverage 🍵🥤",
-        "Sweets": "Make a homemade dessert 🍪🍰"
+    // Map each category to a dish name
+    const dishMapping = {
+        "Fruits": "fruit salad",
+        "Vegetables": "vegetable stir-fry",
+        "Snacks": "snack mix",
+        "Dairy": "smoothie",
+        "Grains": "grain bowl",
+        "Meat": "protein dish",
+        "Seafood": "seafood medley",
+        "Beverages": "refreshing drink",
+        "Sweets": "dessert"
     };
 
     // Exclude categories based on dietary preferences
@@ -68,10 +69,14 @@ function generateRecommendations(inventory) {
         excludedCategories.push("Grains");
     }
 
+    // Build realistic recommendations using available ingredients
     let recommendations = [];
-    for (let category in categories) {
-        if (!excludedCategories.includes(category) && inventory.some(item => item.category === category)) {
-            recommendations.push(categories[category]);
+    for (let category in dishMapping) {
+        if (excludedCategories.includes(category)) continue;
+        const items = inventory.filter(item => item.category === category);
+        if (items.length > 0) {
+            const ingredientNames = items.map(item => item.name).join(', ');
+            recommendations.push(`Make a ${dishMapping[category]} with ${ingredientNames}.`);
         }
     }
 
@@ -92,10 +97,26 @@ function displayInventory(inventory) {
     inventory.forEach((item, index) => {
         const itemDiv = document.createElement('div');
         itemDiv.innerHTML = `
-            <p><strong>Name:</strong> ${item.name}</p>
-            <p><strong>Quantity:</strong> ${item.quantity}</p>
-            <p><strong>Category:</strong> ${item.category}</p>
-            <button onclick="removeFoodItem(${index})">Remove</button>
+            <form onsubmit="saveEditedItem(event, ${index})" class="edit-form">
+                <p>
+                    <strong>Name:</strong>
+                    <input type="text" name="name" value="${item.name}" required />
+                </p>
+                <p>
+                    <strong>Quantity:</strong>
+                    <input type="number" name="quantity" value="${item.quantity}" required />
+                </p>
+                <p>
+                    <strong>Category:</strong>
+                    <select name="category" required>
+                        ${["Fruits", "Vegetables", "Snacks", "Dairy", "Grains", "Meat", "Seafood", "Beverages", "Sweets"]
+                            .map(cat => `<option value="${cat}" ${cat === item.category ? "selected" : ""}>${cat}</option>`)
+                            .join('')}
+                    </select>
+                </p>
+                <button type="submit">Save</button>
+                <button type="button" onclick="removeFoodItem(${index})">Remove</button>
+            </form>
             <hr>
         `;
         outputDiv.appendChild(itemDiv);
@@ -104,7 +125,7 @@ function displayInventory(inventory) {
 
 function addFoodItem(event) {
     event.preventDefault();
-    const name = document.getElementById('foodName').value;
+    const name = document.getElementById('foodName').value.trim();
     const quantity = parseInt(document.getElementById('foodQuantity').value);
     const category = document.getElementById('foodCategory').value;
 
@@ -114,7 +135,20 @@ function addFoodItem(event) {
     }
 
     let inventory = JSON.parse(localStorage.getItem('foodInventory')) || [];
-    inventory.push({ name, quantity, category });
+
+    // Check for existing item (case-insensitive match)
+    const existingIndex = inventory.findIndex(
+        item => item.name.toLowerCase() === name.toLowerCase() && item.category === category
+    );
+
+    if (existingIndex !== -1) {
+        // If exists, update the quantity
+        inventory[existingIndex].quantity += quantity;
+    } else {
+        // Else, add as new item
+        inventory.push({ name, quantity, category });
+    }
+
     localStorage.setItem('foodInventory', JSON.stringify(inventory));
     displayInventory(inventory);
     document.getElementById('foodForm').reset();
@@ -127,15 +161,32 @@ function removeFoodItem(index) {
     displayInventory(inventory);
 }
 
+function saveEditedItem(event, index) {
+    event.preventDefault();
+
+    const form = event.target;
+    const name = form.name.value.trim();
+    const quantity = parseInt(form.quantity.value);
+    const category = form.category.value;
+
+    if (!name || !quantity || !category) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    let inventory = JSON.parse(localStorage.getItem("foodInventory")) || [];
+    inventory[index] = { name, quantity, category };
+    localStorage.setItem("foodInventory", JSON.stringify(inventory));
+    displayInventory(inventory);
+}
+
 // Auto-detect which page is loaded and execute the correct function
 document.addEventListener("DOMContentLoaded", () => {
     if (document.body.contains(document.getElementById('output'))) {
         if (window.location.pathname.includes('food-recommendations.html')) {
             document.getElementById('preferencesForm').addEventListener('submit', savePreferences);
-
             loadInventory(generateRecommendations, 'db/foodinventory.json');
         } else if (window.location.pathname.includes('view-database.html')) {
-
             loadInventory(displayInventory, 'foodinventory.json');
             document.getElementById('foodForm').addEventListener('submit', addFoodItem);
         }
